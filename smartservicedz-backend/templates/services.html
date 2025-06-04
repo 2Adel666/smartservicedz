@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire de Facture</title>
+</head>
+<body>
+    <h1>Formulaire de Facture</h1>
+    <form id="factureForm">
+        <label>Nom du client : <input type="text" name="client" required></label><br>
+        <label>Montant : <input type="number" name="montant" required></label><br>
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <p id="response"></p>
+
+    <script>
+        document.getElementById("factureForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const formData = {
+                client: e.target.client.value,
+                montant: e.target.montant.value
+            };
+            const res = await fetch("/facture", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            document.getElementById("response").innerText = data.message + " ✅";
+        });
+    </script>
+</body>
+</html>
