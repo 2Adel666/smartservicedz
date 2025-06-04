@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Services</title></head>
+<body>
+  <h1>Formulaire de Facture</h1>
+  <form id="factureForm">
+    <input type="text" name="client" placeholder="Nom du client" required />
+    <input type="number" name="montant" placeholder="Montant HT" required />
+    <button type="submit">Générer</button>
+  </form>
+  <pre id="resultat"></pre>
+  <script>
+    document.getElementById('factureForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const client = e.target.client.value;
+      const montant = e.target.montant.value;
+      const res = await fetch('/api/generate-invoice', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ client, montant })
+      });
+      const data = await res.json();
+      document.getElementById('resultat').textContent = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>
