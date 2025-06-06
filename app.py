@@ -19,3 +19,12 @@ def api_generate_invoice():
 
 if __name__ == '__main__':
     app.run()
+from flask import Flask, render_template, request, jsonify
+import time
+
+app = Flask(__name__)
+
+# Route pour afficher le formulaire
+@app.route("/formulaire", methods=["GET"])
+def afficher_formulaire():
+    return render_template("formulaire.html")
