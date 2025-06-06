@@ -1,39 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <title>Formulaire Facture</title>
+  <meta charset="UTF-8">
+  <title>Formulaire</title>
 </head>
 <body>
   <h1>Formulaire de Facture</h1>
-  <form id="facture-form">
+  <form id="factureForm">
     <label>Nom du client : <input type="text" name="client" /></label><br>
     <label>Montant HT : <input type="number" name="montant_ht" /></label><br>
-    <label>TVA (%) : <input type="number" name="tva" value="19" /></label><br>
     <button type="submit">Envoyer</button>
   </form>
-
-  <script>
-    document.getElementById("facture-form").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        client: form.client.value,
-        montant_ht: parseFloat(form.montant_ht.value),
-        tva: parseFloat(form.tva.value),
-        total: parseFloat(form.montant_ht.value) * (1 + parseFloat(form.tva.value) / 100),
-        date: new Date().toLocaleDateString(),
-        numero: "FAC-" + Date.now()
-      };
-
-      const res = await fetch("https://smartservicedz-3.onrender.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      const result = await res.json();
-      alert(result.message);
-    });
-  </script>
 </body>
 </html>
