@@ -1,4 +1,30 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route("/")
+def index():
+    return "<h1>Bienvenue sur SmartServiceDZ</h1><p>Accédez au <a href='/formulaire'>formulaire de facture</a>.</p>"
+
+@app.route("/formulaire")
+def formulaire():
+    return render_template("formulaire.html")
+
+@app.route("/submit", methods=["POST"])
+def recevoir_formulaire():
+    data = request.get_json()
+    
+    print("Données reçues :", data)
+
+    # Tu pourrais ici sauvegarder dans un fichier, base de données, etc.
+
+    return jsonify({"message": "Données reçues avec succès", "status": "ok"})
+
+if __name__ == "__main__":
+    app.run(debug=True)
+from flask import Flask, render_template, request, jsonify
 from services.facture import generer_facture
 
 app = Flask(__name__)
